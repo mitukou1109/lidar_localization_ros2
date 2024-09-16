@@ -405,11 +405,18 @@ void PCLLocalization::imuReceived(const sensor_msgs::msg::Imu::ConstSharedPtr ms
     return;
   }
 
-  Eigen::Vector3f angular_velo{tf_converted_imu.angular_velocity.x, tf_converted_imu.angular_velocity.y,
-    tf_converted_imu.angular_velocity.z};
-  Eigen::Vector3f acc{tf_converted_imu.linear_acceleration.x, tf_converted_imu.linear_acceleration.y, tf_converted_imu.linear_acceleration.z};
-  Eigen::Quaternionf quat{msg->orientation.w, msg->orientation.x, msg->orientation.y,
-    msg->orientation.z};
+  Eigen::Vector3f angular_velo{
+      static_cast<float>(tf_converted_imu.angular_velocity.x),
+      static_cast<float>(tf_converted_imu.angular_velocity.y),
+      static_cast<float>(tf_converted_imu.angular_velocity.z)};
+  Eigen::Vector3f acc{
+      static_cast<float>(tf_converted_imu.linear_acceleration.x),
+      static_cast<float>(tf_converted_imu.linear_acceleration.y),
+      static_cast<float>(tf_converted_imu.linear_acceleration.z)};
+  Eigen::Quaternionf quat{static_cast<float>(msg->orientation.w),
+                          static_cast<float>(msg->orientation.x),
+                          static_cast<float>(msg->orientation.y),
+                          static_cast<float>(msg->orientation.z)};
   double imu_time = msg->header.stamp.sec +
     msg->header.stamp.nanosec * 1e-9;
 
